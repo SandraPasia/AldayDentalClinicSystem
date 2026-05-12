@@ -7,10 +7,15 @@ from models import db, Booking, Message, Payment, Feedback, Setting
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:sandraisabel022506_@localhost:3306/Alday_Dental'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SESSION_PERMANENT'] = False
-app.secret_key = 'alday-dental-admin-secret-2024'
+import os
+
+app.config['SQLALCHEMY_DATABASE_URI'] = (
+    f"mysql+pymysql://{os.getenv('DB_USER')}:"
+    f"{os.getenv('DB_PASSWORD')}@"
+    f"{os.getenv('DB_HOST')}:"
+    f"{os.getenv('DB_PORT', '3306')}/"
+    f"{os.getenv('DB_NAME')}"
+)
 
 db.init_app(app)
 
